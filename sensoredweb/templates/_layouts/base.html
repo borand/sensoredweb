@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+	<head>
+		<title>{% block page_title %}{% endblock %}</title>
+	</head>
+	<body>
+		<h2>Sensored Web</h2>
+		<p>
+			Your web of sensors
+		</p>
+		<a href="/">home</a> | <a href="/about">About</a>
+		<hr>
+		{% block page_content %}{% endblock %}
+	</body>
+</html>

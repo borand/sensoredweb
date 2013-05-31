@@ -1,0 +1,15 @@
+{% extends "_layouts/base.html" %}
+
+{% block page_title %}Device Instance List {% endblock %}
+
+{% block page_content %}
+<h2>Device Instance List</h2>
+<ul>
+    {% for dev in deviceinstance_list %}
+    <li><a>{{dev.device}}, {{dev.device.model_number}},{{dev.serial_number}}, {{dev.last_value.value}} </a></li>
+    {% empty %}
+    <li>Sorry, no devices added. Check back soon!</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
