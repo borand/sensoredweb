@@ -1,3 +1,1 @@
 Create a sym link from sensordata/templates to main templates dir
-ln -s /home/borand/projects/universal-sensor/dj-sensor-1/src/djSensor/sensordata/templates /home/borand/projects/universal-sensor/dj-sensor-1/src/templates/sensordata
-
