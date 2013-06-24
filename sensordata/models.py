@@ -159,7 +159,8 @@ class DeviceInstance(models.Model):
     gateway         = models.ForeignKey(DeviceGateway)
     location        = models.ForeignKey(Location, null=True)
     physical_signal = models.ForeignKey(PhysicalSignal)        
-    active          = models.BooleanField()    
+    active          = models.BooleanField()
+    private         = models.BooleanField(default=False)
     serial_number   = models.CharField("Serial Number",max_length=255)
     
     def __unicode__(self):

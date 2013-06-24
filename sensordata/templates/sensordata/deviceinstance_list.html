@@ -4,12 +4,35 @@
 
 {% block page_content %}
 <h2>Device Instance List</h2>
-<ul>
+<!-- <ul>
     {% for dev in deviceinstance_list %}
     <li><a>{{dev.device}}, {{dev.device.model_number}},{{dev.serial_number}}, {{dev.last_value.value}} </a></li>
     {% empty %}
     <li>Sorry, no devices added. Check back soon!</li>
-    {% endfor %}
-</ul>
+    {% endfor %}    
+</ul> -->
+
+<table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">
+         <thead>
+           <tr class="ui-bar-d">
+             <th data-priority="2">Device</th>             
+             <th data-priority="3">Model Number</th>
+             <th data-priority="1"><abbr title="Rotten Tomato Rating">Serial Number</abbr></th>
+             <th data-priority="5">Value</th>
+           </tr>
+         </thead>
+         <tbody>
+         {% for dev in deviceinstance_list %}
+           <tr>           	
+             <th>{{dev.device}}</th>             
+             <td>{{dev.device.model_number}}</td>
+             <td>{{dev.serial_number}}</td>
+             <td>{{dev.last_value.value}}</td>                 
+           </tr>
+           {% empty %}
+    		<td>Sorry, no devices added. Check back soon!</td>
+    	    {% endfor %} 
+         </tbody>
+       </table>
 
 {% endblock %}
