@@ -36,7 +36,7 @@ class HomePageView(TemplateView):
         
         msg = "you are home @ %s" % (datetime.datetime.now())        
         context = super(HomePageView, self).get_context_data(**kwargs)        
-        context['device_instance'] = models.DeviceInstance.objects.all().order_by('device')
+        # context['device_instance'] = models.DeviceInstance.objects..filter(private=False).order_by('device')
         context['msg'] = msg
         logger.info(msg)
         return context
@@ -46,7 +46,8 @@ class HomePageView(TemplateView):
 # Basic object display classes
 #
 class DeviceInstanceView(ListView):
-    model = models.DeviceInstance
+    # model = models.DeviceInstance
+    queryset = models.DeviceInstance.objects.filter(private=False).order_by('device')
 
 
 class DataValueView(ListView):
