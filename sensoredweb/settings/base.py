@@ -13,7 +13,7 @@ print "#########################################################################
 print "#  BASE.PY                                                                    #"
 print '# root: ', root()
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

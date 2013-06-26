@@ -2,4 +2,5 @@
 .pydevproject
 .project
 local.py
+venv
 *.db
