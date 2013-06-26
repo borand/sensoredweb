@@ -29,7 +29,7 @@ DATABASES = {
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sensoredweb.heroku.com']
 
 #DATABASES = {
 #    'default': dj_database_url.config()
@@ -165,10 +165,16 @@ LOGGING = {
         'simple': { 'format': '%(levelname)s %(asctime)s  %(module)s %(message)s'},
         'custom': { 'format': '%(module)15s.%(funcName)-23s :%(levelname)-8s: %(message)s'},
     },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
     'handlers': {
         'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'
+            'level': 'ERROR',            
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'            
         },
         'console': {
             'level': 'DEBUG',
@@ -189,3 +195,4 @@ LOGGING = {
         },
     }
 }
+
