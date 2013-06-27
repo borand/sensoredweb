@@ -17,8 +17,7 @@ urlpatterns = patterns('',
     
     url(r'^api/datavalue/(?P<device>[a-zA-Z0-9-_]+)/(?P<today>)today','sensordata.views.api_get_datavalue', name='data_value_api'),    
     url(r'^api/datavalue/(?P<device>[a-zA-Z0-9-_]+)/from/(?P<from>\d{4}\-\d{1,2}\-\d{1,2})/to/(?P<to>\d{4}\-\d{1,2}\-\d{1,2})','sensordata.views.api_get_datavalue', name='data_value_api'),
-    url(r'^api/datavalue/(?P<device>[a-zA-Z0-9-_]+)','sensordata.views.api_get_datavalue', name='data_value_api'),
-    url(r'^api/datavalue/(?P<device>[a-zA-Z0-9-_]+)','sensordata.views.api_get_datavalue', name='data_value_api'),
+    url(r'^api/datavalue/(?P<device>[a-zA-Z0-9-_]+)','sensordata.views.api_get_datavalue', name='data_value_api'),    
     url(r'^api/datavalue/(?P<device>[a-zA-Z0-9-_]+).json?callback=?$','sensordata.views.api_get_datavalue', name='data_value_api'),
 )
 

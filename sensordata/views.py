@@ -116,12 +116,11 @@ def api_get_datavalue(request, **kwargs):
     if kwargs.has_key('today'):
         logger.debug("Filtering: todays data")        
         items = items.filter(data_timestamp__measurement_timestamp__gte=datetime.date.today())
-        print items
+            
     if kwargs.has_key('from') and kwargs.has_key('to'):
         start_date = datetime.datetime.strptime(kwargs['from'].split('.')[0],"%Y-%m-%d")
         end_date   = datetime.datetime.strptime(kwargs['to'].split('.')[0],"%Y-%m-%d")
         items = items.filter(data_timestamp__measurement_timestamp__range=(start_date, end_date))
-       
 
     logger.debug("Found %d items matching criteria " % items.count())
     values_list = items.values_list('data_timestamp__measurement_timestamp','value')    
@@ -134,10 +133,11 @@ def api_get_datavalue(request, **kwargs):
     for data_pt in values_list:        
         data.append([time.mktime(data_pt[0].timetuple())*1000,data_pt[1]])
 
+
     logger.debug("Making value pair list = %.3f" % (time.time() - to))
     
     #items      = serializers.serialize('json', values)
-    data_dict = {'data': data}
+    data_dict = {'data': data, 'serial_number': kwargs['device']}
     #data_dict = [{'data' : data, 'name' : kwargs['device']}]    
     json_out   = simplejson.dumps(data_dict)    
 #    json_out   = simplejson.dumps(data) 
@@ -153,5 +153,9 @@ def api_get_datavalue(request, **kwargs):
 #    req = {}
 #    req ['title'] = 'This is a constant result.'
 #    response = simplejson.dumps(req)
-    response = callback + '(' + json_out + ');'        
+    if 'highcharts' in callback:
+        response = callback + '(' + json_out + ');'
+    else:
+        response = json_out
+
     return HttpResponse(response, mimetype=mimetype,content_type='application/json')
