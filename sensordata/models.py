@@ -159,6 +159,7 @@ class DeviceInstance(models.Model):
     gateway         = models.ForeignKey(DeviceGateway)
     location        = models.ForeignKey(Location, null=True)
     physical_signal = models.ForeignKey(PhysicalSignal)        
+    # update_rate     = models.DecimalField("Min. Update Interval [sec]",max_digits=15, decimal_places=3, default=1) 
     active          = models.BooleanField()
     private         = models.BooleanField(default=False)
     serial_number   = models.CharField("Serial Number",max_length=255)
