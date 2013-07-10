@@ -139,14 +139,14 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    #'south',
+    'south',
 )
 
 LOCAL_APPS =(
     'sensordata',
 )
 
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 #INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # A sample logging configuration. The only tangible logging

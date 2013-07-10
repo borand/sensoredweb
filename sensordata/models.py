@@ -18,25 +18,25 @@ import time
 from django.utils.log import getLogger
 logger = getLogger("app")
 
-version = '2013.04.13' 
+version = '2013.07.08' 
 
 
 class Units(models.Model):
     """
     Table describing measurement units for specific measurements and physical signals the project
     """
-    SYSTEM_OF_UNITS = (
-                       ('SI'    ,'SI'),
-                       ('ENG'   ,'Imperial'),
-                       ('NONE'  ,'None'),
-                       ('AU'    ,'Arbitrary units'),
-                       ('COUNTS','Digital counts'),
-                       )
+    # SYSTEM_OF_UNITS = (
+    #                    ('SI'    ,'SI'),
+    #                    ('ENG'   ,'Imperial'),
+    #                    ('NONE'  ,'None'),
+    #                    ('AU'    ,'Arbitrary units'),
+    #                    ('COUNTS','Digital counts'),
+    #                    )
     
     #units_id     = models.AutoField(primary_key=True)    
-    name   = models.CharField(max_length=25)
+    name   = models.CharField(max_length=25, default="None")
     symbol = models.CharField(max_length=30, blank=True)
-    system = models.CharField(max_length=8, choices=SYSTEM_OF_UNITS, blank=True)
+    system = models.CharField(max_length=8, blank=True)
     notes  = models.TextField(blank=True)
         
     class Admin:
@@ -46,7 +46,7 @@ class Units(models.Model):
         return "%s [%s]" % (self.name, self.symbol)
 
 class Manufacturer(models.Model):
-    name  = models.CharField(max_length=150)
+    name  = models.CharField(max_length=150, default="None")
     url   = models.URLField(max_length=750, blank=True)
     notes = models.TextField(blank=True)
         
@@ -75,7 +75,7 @@ class PhysicalSignal(models.Model):
     """
     Description of the physical phenomenon being measured, such as air temperature, pressure, etc.
     """    
-    signal_name        = models.CharField(max_length=25)
+    signal_name        = models.CharField(max_length=25, default="None")
     signal_description = models.CharField(max_length=30, blank=True)        
     
     def __unicode__(self):
@@ -114,11 +114,11 @@ class DeviceGateway(models.Model):
     """
     name          = models.CharField("Name", max_length=255, default="localhost")
     address       = models.IPAddressField("Address", default="127.0.0.1")
-    port          = models.IntegerField("Port",default=8888)
+    port          = models.IntegerField("Port",default=8000)
     protocol      = models.CharField("Protocol", max_length=255, blank=True, default="http")
     url           = models.URLField(blank=True)
     mac_address   = models.CharField(max_length=75, blank=True)
-    active        = models.BooleanField()
+    active        = models.BooleanField(default=True)
     process_name  = models.CharField("Process Name", max_length=255, blank=True)
     process_pid   = models.IntegerField("PID", default=0, blank=True)
     description   = models.CharField("Description", max_length=255, blank=True)
@@ -133,7 +133,7 @@ class Location(models.Model):
     Area where the device is installed, including absolute and relative coordinates of the device.  
     Absolute coordinates are referenced to the property origin, while relative xyz coordinates might might vary. 
     """
-    area                   = models.TextField()    
+    area                   = models.TextField(default="None")    
     description            = models.TextField(blank=True)
     image_url              = models.URLField(blank=True);
     x_absolute             = models.DecimalField(max_digits=10, decimal_places=3, blank=True, default=0)
@@ -157,9 +157,10 @@ class DeviceInstance(models.Model):
     user            = models.ForeignKey(User, default=1)    
     device          = models.ForeignKey(Device)    
     gateway         = models.ForeignKey(DeviceGateway)
+    accept_from_gateway_only = models.BooleanField()
     location        = models.ForeignKey(Location, null=True)
     physical_signal = models.ForeignKey(PhysicalSignal)        
-    # update_rate     = models.DecimalField("Min. Update Interval [sec]",max_digits=15, decimal_places=3, default=1) 
+    update_rate     = models.DecimalField("Min. Update Interval [sec]",max_digits=15, decimal_places=3, default=1) 
     active          = models.BooleanField()
     private         = models.BooleanField(default=False)
     serial_number   = models.CharField("Serial Number",max_length=255)
