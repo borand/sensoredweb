@@ -61,6 +61,14 @@ def data_value_submission(datestamp, serial_number, data_value, remote_addr):
         
     if len(DeviceInstanceList) == 1:            
         DeviceInstance = DeviceInstanceList[0]
+
+        if DeviceInstance.accept_from_gateway_only:
+            msg = 'remote_address=%s matches DeviceInstance.gateway.address=%s' % (remote_addr,DeviceInstance.gateway.address)
+            logger.debug(msg)
+            if remote_addr not in DeviceInstance.gateway.address:
+                msg = '[REJECTED]: Can only submit data from parent gateway'
+                logger.debug(msg)
+                return msg
         
         if  DeviceInstance.active:
             TimeStamp = get_existing_or_new(datestamp)
@@ -135,7 +143,7 @@ def data_value_submission(datestamp, serial_number, data_value, remote_addr):
             msg = "  [REJECTED]: Device is not active, data will not be saved"            
     else:
         msg = "  [REJECTED]: Device serial_number %s, NOT FOUND IN DB" % serial_number
-    logger.debug(msg)    
+    logger.debug(msg)
     return msg
 
 if __name__ == '__main__':
