@@ -26,8 +26,8 @@ class DeviceGatewayAdmin(admin.ModelAdmin):
     list_filter   = ('active','protocol',)
 #
 class DeviceInstanceAdmin(admin.ModelAdmin):
-    list_display  = ['device','serial_number','gateway','location','physical_signal','active']
-    list_editable = ['active','serial_number']
+    list_display  = ['device','serial_number','gateway','location','physical_signal','active','private']
+    list_editable = ['active','serial_number','private']
     list_filter   = ['user','active','device','gateway','location']
     
 class DeviceAdmin(admin.ModelAdmin):
