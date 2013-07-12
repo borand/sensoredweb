@@ -3,10 +3,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from django.contrib.auth.models import User
 from rest_framework import mixins
 from rest_framework import generics
 
-from .serializers import UnitsSerializer, ManufacturerSerializer, TimeStampSerializer, DataValueSerializer
+from .serializers import UnitsSerializer, ManufacturerSerializer, \
+                        TimeStampSerializer, DataValueSerializer, DeviceInstanceSerializer,\
+                        UserSerializer,TimeStampSerializer,\
+                        PhysicalSignalSerializer, DeviceSerializer, DeviceGatewaySerializer
 from . import models
 
 import datetime
@@ -17,10 +21,16 @@ logger = getLogger("app")
 # API - usign django-rest-framework
 #
 
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
 class UnitstList(generics.ListCreateAPIView):
     queryset = models.Units.objects.all()
     serializer_class = UnitsSerializer
-
 class UnitsDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Units.objects.all()
     serializer_class = UnitsSerializer
@@ -28,14 +38,45 @@ class UnitsDetail(generics.RetrieveUpdateDestroyAPIView):
 class ManufacturerList(generics.ListCreateAPIView):
     queryset = models.Manufacturer.objects.all()
     serializer_class = ManufacturerSerializer
+class ManufacturerDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Manufacturer.objects.all()
+    serializer_class = ManufacturerSerializer
 
 class TimestampList(generics.ListCreateAPIView):
     queryset = models.TimeStamp.objects.all()
     serializer_class = TimeStampSerializer
-
 class TimestampDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.TimeStamp.objects.all()
     serializer_class = TimeStampSerializer
+
+class PhysicalSignalList(generics.ListCreateAPIView):
+    queryset = models.PhysicalSignal.objects.all()
+    serializer_class = PhysicalSignalSerializer
+class PhysicalSignalDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.PhysicalSignal.objects.all()
+    serializer_class = PhysicalSignalSerializer
+
+class DeviceList(generics.ListCreateAPIView):
+    queryset = models.Device.objects.all()
+    serializer_class = DeviceSerializer
+class DeviceDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Device.objects.all()
+    serializer_class = DeviceSerializer
+
+class DeviceGatewayList(generics.ListCreateAPIView):
+    queryset = models.DeviceGateway.objects.all()
+    serializer_class = DeviceGatewaySerializer
+class DeviceGatewayDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.DeviceGateway.objects.all()
+    serializer_class = DeviceGatewaySerializer
+
+class DeviceInstanceList(generics.ListCreateAPIView):
+    queryset = models.TimeStamp.objects.all()
+    serializer_class = DeviceInstanceSerializer
+
+class DeviceInstanceDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.TimeStamp.objects.all()
+    serializer_class = DeviceInstanceSerializer
 
 class DataValueList(generics.ListCreateAPIView):
     # queryset = models.DataValue.objects.all()    

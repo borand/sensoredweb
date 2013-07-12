@@ -23,9 +23,28 @@ urlpatterns = patterns('',
     url(r'^api/datavalue/(?P<device>[a-zA-Z0-9-_]+).json?callback=?$','sensordata.views.api_get_datavalue', name='data_value_api'),
 
     ## REST-FRAMEWORK-API
+    url(r'^api/users/$', api_views.UserList.as_view()),
+    url(r'^api/users/(?P<pk>[0-9]+)/$', api_views.UserDetail.as_view()),
+
     url(r'^api/units/$', api_views.UnitstList.as_view()),
     url(r'^api/units/(?P<pk>[0-9]+)/$', api_views.UnitsDetail.as_view()),
+
     url(r'^api/man/$', api_views.ManufacturerList.as_view()),
+
+    url(r'^api/units/$', api_views.UnitstList.as_view()),
+    url(r'^api/units/(?P<pk>[0-9]+)/$', api_views.UnitsDetail.as_view()),
+
+    url(r'^api/deviceinstance/$', api_views.PhysicalSignalList.as_view()),
+    url(r'^api/deviceinstance/(?P<pk>[0-9]+)/$', api_views.PhysicalSignalDetail.as_view()),
+
+    url(r'^api/physicalsignal/$', api_views.PhysicalSignalList.as_view()),
+    url(r'^api/physicalsignal/(?P<pk>[0-9]+)/$', api_views.PhysicalSignalDetail.as_view()),
+
+    url(r'^api/device/$', api_views.DeviceList.as_view()),
+    url(r'^api/device/(?P<pk>[0-9]+)/$', api_views.DeviceDetail.as_view()),
+
+    url(r'^api/gateway/$', api_views.DeviceGatewayList.as_view()),
+    url(r'^api/gateway/(?P<pk>[0-9]+)/$', api_views.DeviceGatewayDetail.as_view()),
 
     url(r'^api/timestamp/$', api_views.TimestampList.as_view()),
     url(r'^api/timestamp/(?P<pk>[0-9]+)/$', api_views.TimestampDetail.as_view()),

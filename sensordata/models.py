@@ -126,7 +126,7 @@ class DeviceGateway(models.Model):
     #serial_number = models.CharField("Serial Number", max_length=40, unique=True)
     
     def __unicode__(self):
-        return self.name+"@"+ str(self.address)+":"+str(self.port)
+        return self.name +"@"+ str(self.address)+":"+str(self.port)
      
 class Location(models.Model):
     """
@@ -154,7 +154,7 @@ class DataValueManager(models.Manager):
         
 
 class DeviceInstance(models.Model): 
-    user            = models.ForeignKey(User, default=1)    
+    user            = models.ForeignKey(User, default=1,related_name='device_instance')
     device          = models.ForeignKey(Device)    
     gateway         = models.ForeignKey(DeviceGateway)
     accept_from_gateway_only = models.BooleanField()
