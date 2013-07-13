@@ -63,17 +63,17 @@ class DeviceSerializer(serializers.ModelSerializer):
 class DeviceGatewaySerializer(serializers.ModelSerializer):
     class Meta:
         model = DeviceGateway
-        fields = ('id', 'name', 'address','port','protocol','url','mac_address','active','process_name','process_pid','description')
+        # fields = ('id', 'name', 'address','port','protocol','url','mac_address','active','process_name','process_pid','description')
 
 class DataValueSerializer(serializers.ModelSerializer):
     class Meta:
         model = DataValue
-        fields = ('data_timestamp', 'device_instance','value')
+        # fields = ('data_timestamp', 'device_instance','value')
 
 class DeviceInstanceSerializer(serializers.ModelSerializer):
     user = serializers.Field(source='user.username')
     class Meta:
         model = DeviceInstance
-        # fields = ('id','user', 'device','gateway','accept_from_gateway_only',\
-        #     'location','physical_signal','update_rate','active','private','serial_number')
-        fields = ('id','user', 'accept_from_gateway_only','update_rate','active','private','serial_number')
+        fields = ('id','user', 'device','gateway','accept_from_gateway_only',\
+            'location','physical_signal','update_rate','active','private','serial_number')
+        # fields = ('id','user', 'accept_from_gateway_only','update_rate','active','private','serial_number')

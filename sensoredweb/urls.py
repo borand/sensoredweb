@@ -17,9 +17,13 @@ urlpatterns = patterns('',
     (r'^sensordata/', include('sensordata.urls', namespace="sensordata")),
 )
 
-# Add static server if required
 urlpatterns += patterns('',
-    (r'^static/(.*)$', 'django.views.static.serve', {
-        'document_root': settings.STATIC_ROOT
-    }),
+    url(r'^api-auth/', include('rest_framework.urls',
+                               namespace='rest_framework')),
 )
+# Add static server if required
+# urlpatterns += patterns('',
+#     (r'^static/(.*)$', 'django.views.static.serve', {
+#         'document_root': settings.STATIC_ROOT
+#     }),
+# )

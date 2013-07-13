@@ -163,7 +163,7 @@ class DeviceInstance(models.Model):
     update_rate     = models.DecimalField("Min. Update Interval [sec]",max_digits=15, decimal_places=3, default=1) 
     active          = models.BooleanField()
     private         = models.BooleanField(default=False)
-    serial_number   = models.CharField("Serial Number",max_length=255)
+    serial_number   = models.CharField("Serial Number",max_length=255, unique=True)
     
     def __unicode__(self):
         return "%s-%s : %s : %s" % (self.device, self.serial_number, self.physical_signal, self.location)

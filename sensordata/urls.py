@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 from sensordata.class_views import ApiDeviceInstanceView, ApiDataValueView, ApiDataValueView
 from rest_framework.urlpatterns import format_suffix_patterns
+from django.conf.urls import include
 from . import views
 from . import api_views
 
@@ -34,9 +35,6 @@ urlpatterns = patterns('',
     url(r'^api/units/$', api_views.UnitstList.as_view()),
     url(r'^api/units/(?P<pk>[0-9]+)/$', api_views.UnitsDetail.as_view()),
 
-    url(r'^api/deviceinstance/$', api_views.PhysicalSignalList.as_view()),
-    url(r'^api/deviceinstance/(?P<pk>[0-9]+)/$', api_views.PhysicalSignalDetail.as_view()),
-
     url(r'^api/physicalsignal/$', api_views.PhysicalSignalList.as_view()),
     url(r'^api/physicalsignal/(?P<pk>[0-9]+)/$', api_views.PhysicalSignalDetail.as_view()),
 
@@ -49,8 +47,13 @@ urlpatterns = patterns('',
     url(r'^api/timestamp/$', api_views.TimestampList.as_view()),
     url(r'^api/timestamp/(?P<pk>[0-9]+)/$', api_views.TimestampDetail.as_view()),
 
+    url(r'^api/deviceinstance/$', api_views.DeviceInstanceList.as_view()),
+    url(r'^api/deviceinstance/(?P<pk>[0-9]+)/$', api_views.DeviceInstanceDetail.as_view()),
+
     url(r'^rest/datavalue/(?P<device>[a-zA-Z0-9-_]+)/$', api_views.DataValueList.as_view()),
 )
+
+
 
 urlpatterns = format_suffix_patterns(urlpatterns)
 

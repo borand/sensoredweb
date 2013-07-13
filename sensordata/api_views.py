@@ -1,17 +1,19 @@
 from django.http import Http404
+from django.contrib.auth.models import User
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
-from django.contrib.auth.models import User
 from rest_framework import mixins
 from rest_framework import generics
+from rest_framework import permissions
 
 from .serializers import UnitsSerializer, ManufacturerSerializer, \
                         TimeStampSerializer, DataValueSerializer, DeviceInstanceSerializer,\
                         UserSerializer,TimeStampSerializer,\
                         PhysicalSignalSerializer, DeviceSerializer, DeviceGatewaySerializer
 from . import models
+from .permissions import IsOwnerOrReadOnly
 
 import datetime
 import time
@@ -71,12 +73,20 @@ class DeviceGatewayDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DeviceGatewaySerializer
 
 class DeviceInstanceList(generics.ListCreateAPIView):
-    queryset = models.TimeStamp.objects.all()
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly)
+    queryset = models.DeviceInstance.objects.all()
     serializer_class = DeviceInstanceSerializer
+    
+    def pre_save(self, obj):
+        obj.user = self.request.user
 
 class DeviceInstanceDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.TimeStamp.objects.all()
-    serializer_class = DeviceInstanceSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly)
+    queryset = models.DeviceInstance.objects.all()
+    serilizer_class = DeviceInstanceSerializer
+
+    def pre_save(self, obj):
+        obj.user = self.request.user
 
 class DataValueList(generics.ListCreateAPIView):
     # queryset = models.DataValue.objects.all()    
