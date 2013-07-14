@@ -148,6 +148,11 @@ LOCAL_APPS =(
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS  + LOCAL_APPS
+
+# 3rd party config
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
+}
 #INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # A sample logging configuration. The only tangible logging

@@ -8,6 +8,7 @@ from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import permissions
 
+import serializers
 from .serializers import UnitsSerializer, ManufacturerSerializer, \
                         TimeStampSerializer, DataValueSerializer, DeviceInstanceSerializer,\
                         UserSerializer,TimeStampSerializer,\
@@ -81,24 +82,36 @@ class DeviceInstanceList(generics.ListCreateAPIView):
         obj.user = self.request.user
 
 class DeviceInstanceDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly)
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly)
+    permission_classes = (permissions.IsAuthenticated,IsOwnerOrReadOnly)
     queryset = models.DeviceInstance.objects.all()
-    serilizer_class = DeviceInstanceSerializer
+    serializer_class = DeviceInstanceSerializer
 
-    def pre_save(self, obj):
-        obj.user = self.request.user
+    # def pre_save(self, obj):
+    #     obj.user = self.request.user
 
 class DataValueList(generics.ListCreateAPIView):
-    # queryset = models.DataValue.objects.all()    
+    permission_classes = (permissions.IsAuthenticated,IsOwnerOrReadOnly)
+    queryset = models.DataValue.objects.all()    
     serializer_class = DataValueSerializer
 
-    def get_queryset(self, **kwargs):
-        kwargs['device'] = 0;
-        print kwargs
+class DataValueDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.IsAuthenticated,IsOwnerOrReadOnly)
+    queryset = models.DataValue.objects.all()    
+    serializer_class = DataValueSerializer
+    # filter_fields = ('device_instance__serial_number')
+
+class DataValueForDevDetail(generics.ListAPIView):      
+    permission_classes = (permissions.IsAuthenticated,IsOwnerOrReadOnly)
+    serializer_class = serializers.DataValuePairSerializer
+
+    def get_queryset(self):
+
+        logger.debug('get_queryset')
         to = time.time()        
-        queryset = models.DataValue.objects.filter(device_instance__serial_number=kwargs['device']).order_by('data_timestamp__measurement_timestamp')
-        logger.debug("Query time             = %.3f" % (time.time() - to))
-        queryset = queryset.values_list('data_timestamp__measurement_timestamp','value')        
+        serial_number = self.kwargs['serial_number']
+        queryset = models.DataValue.objects.filter(device_instance__serial_number=serial_number).order_by('data_timestamp__measurement_timestamp')
+        logger.debug("Query time             = %.3f" % (time.time() - to))        
         return queryset
 
 #######################################################################################

@@ -50,15 +50,13 @@ urlpatterns = patterns('',
     url(r'^api/deviceinstance/$', api_views.DeviceInstanceList.as_view()),
     url(r'^api/deviceinstance/(?P<pk>[0-9]+)/$', api_views.DeviceInstanceDetail.as_view()),
 
-    url(r'^rest/datavalue/(?P<device>[a-zA-Z0-9-_]+)/$', api_views.DataValueList.as_view()),
+    url(r'^rest/datavalue/$', api_views.DataValueList.as_view()),
+    url(r'^rest/datavalue/(?P<pk>[0-9]+)/$', api_views.DataValueDetail.as_view()),
+    url(r'^rest/datavalue/sn/(?P<serial_number>.+)/$', api_views.DataValueForDevDetail.as_view()),
+    # url(r'^rest/datavalue/(?P<device>[a-zA-Z0-9-_]+)/$', api_views.DataValueDetail.as_view()),
 )
 
-
-
 urlpatterns = format_suffix_patterns(urlpatterns)
-
-
-
 
 #<ul>
 #    {% for dev in deviceinstance_list %}
