@@ -1,4 +1,5 @@
 # Create your views here.
+from django.contrib.auth import authenticate, login
 from django.views.generic import View, ListView, DetailView
 from django.views.generic.base import TemplateView
 from django.core import serializers
@@ -46,9 +47,12 @@ class HomePageView(TemplateView):
 # Basic object display classes
 #
 class DeviceInstanceView(ListView):
-    # model = models.DeviceInstance
-    queryset = models.DeviceInstance.objects.filter(private=False).order_by('device')
-
+    
+    def get_queryset(self):
+        if self.request.user.is_authenticated():
+            return models.DeviceInstance.objects.filter(user=self.request.user).order_by('device')
+        else:
+            return models.DeviceInstance.objects.filter(private=False).order_by('device')
 
 class DataValueView(ListView):
     model = models.DataValue
@@ -110,7 +114,9 @@ def api_get_datavalue(request, **kwargs):
     callback = request.GET.get('callback', '')
     logger.debug('callback: ' + callback)
     logger.debug("Filtering: %s, ajax request=%s" % (str(kwargs),str(request.is_ajax())))    
+
     items  = models.DataValue.objects.filter(device_instance__serial_number=kwargs['device']).order_by('data_timestamp__measurement_timestamp')
+
     logger.debug("Query time             = %.3f" % (time.time() - to))
         
     if kwargs.has_key('today'):
@@ -157,5 +163,8 @@ def api_get_datavalue(request, **kwargs):
         response = callback + '(' + json_out + ');'
     else:
         response = json_out
+
+    if not request.user.is_authenticated():
+        response = "not authorized"
 
     return HttpResponse(response, mimetype=mimetype,content_type='application/json')

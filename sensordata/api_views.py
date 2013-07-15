@@ -75,9 +75,9 @@ class DeviceGatewayDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class DeviceInstanceList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly)
+    permission_classes = (permissions.IsAuthenticated,IsOwnerOrReadOnly)
     queryset = models.DeviceInstance.objects.all()
     serializer_class = DeviceInstanceSerializer
-    
     def pre_save(self, obj):
         obj.user = self.request.user
 
