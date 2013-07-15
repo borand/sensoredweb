@@ -14,3 +14,4 @@ More to come ... slowly
 ## updates ##
 
 At this point just reshufling files as I moved to django 1.5.1
+Added django-rest-framework
