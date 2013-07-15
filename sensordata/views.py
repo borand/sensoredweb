@@ -110,6 +110,8 @@ def api_submit_datavalue(request, datestamp, sn, val):
     return HttpResponse(msg + results)
 
 def api_get_datavalue(request, **kwargs):
+    print request
+
     to = time.time()
     callback = request.GET.get('callback', '')
     logger.debug('callback: ' + callback)
@@ -154,8 +156,6 @@ def api_get_datavalue(request, **kwargs):
         mimetype='text/json'        
         mimetype='application/json'
         #mimetype='text/json'
-
-    
 #    req = {}
 #    req ['title'] = 'This is a constant result.'
 #    response = simplejson.dumps(req)
@@ -165,6 +165,7 @@ def api_get_datavalue(request, **kwargs):
         response = json_out
 
     if not request.user.is_authenticated():
+        logger.debug("user = %s" % request.user)
         response = "not authorized"
 
     return HttpResponse(response, mimetype=mimetype,content_type='application/json')
