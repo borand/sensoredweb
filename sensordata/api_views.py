@@ -103,7 +103,7 @@ class DataValueDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class DataValueForDevDetail(generics.ListAPIView):      
     permission_classes = (permissions.IsAuthenticated,IsOwnerOrReadOnly)
-    serializer_class = serializers.DataValuePairSerializer
+    serializer_class = serializers.DataValuePairSerializer2
 
     def get_queryset(self):
 

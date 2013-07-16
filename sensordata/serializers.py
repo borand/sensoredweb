@@ -1,3 +1,4 @@
+import time
 from django.contrib.auth.models import User
 from django.forms import widgets
 from rest_framework import serializers
@@ -89,4 +90,23 @@ class DataValuePairSerializer(serializers.ModelSerializer):
         model = DataValue
         # fields = ('data_timestamp','value')
         fields = ('value',)
+
+class DataValuePairSerializer2(serializers.Serializer):
+    """
+    Adaptation of tutorial example to Units.
+    based on http://django-rest-framework.org/tutorial/1-serialization.html
+    """
+ 
+    data_timestamp = serializers.DateTimeField()
+    value          = serializers.FloatField()
+
+    @property
+    def data(self):
+
+        out = []
+        for item in self.object:
+            utc_time_ms = time.mktime(item.data_timestamp.measurement_timestamp.timetuple())
+            value       = item.value
+            out.append([utc_time_ms, value])
+        return out
 
