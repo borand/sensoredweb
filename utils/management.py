@@ -1,8 +1,8 @@
 import sh
+import re
 #import path
 import logging
 import requests
-import re
 import subprocess
 import time
 

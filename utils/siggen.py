@@ -40,7 +40,7 @@ def siggen(num_of_samples=60, dt=1, ip='127.0.0.1', port=8000):
 
 def populate(num_of_samples=3600,dt=1, ip='127.0.0.1', port=8000,freq=0.1,serial_number='0'):
     
-    to = datetime.datetime(2012,02,01)        
+    to = datetime.datetime(2013,07,15)        
     for i in range(num_of_samples):
         delta_time = datetime.timedelta(seconds=i*dt)
         tn = to + delta_time
@@ -52,3 +52,4 @@ def populate(num_of_samples=3600,dt=1, ip='127.0.0.1', port=8000,freq=0.1,serial
     
 if __name__ == '__main__':
     arguments = docopt(__doc__)
+    populate(num_of_samples=36000)

@@ -1,6 +1,14 @@
+# native libraries
+import time
+import datetime
+
+# django libraries
 from django.http import Http404
 from django.contrib.auth.models import User
+from django.utils.log import getLogger
+from django.http import HttpResponse
 
+# rest_framework libraries
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,6 +16,7 @@ from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import permissions
 
+# sensordata libraries
 import serializers
 from .serializers import UnitsSerializer, ManufacturerSerializer, \
                         TimeStampSerializer, DataValueSerializer, DeviceInstanceSerializer,\
@@ -15,10 +24,8 @@ from .serializers import UnitsSerializer, ManufacturerSerializer, \
                         PhysicalSignalSerializer, DeviceSerializer, DeviceGatewaySerializer
 from . import models
 from .permissions import IsOwnerOrReadOnly
+from data_utils import data_value_submission
 
-import datetime
-import time
-from django.utils.log import getLogger
 logger = getLogger("app")
 #######################################################################################
 # API - usign django-rest-framework
@@ -103,16 +110,63 @@ class DataValueDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class DataValueForDevDetail(generics.ListAPIView):      
     permission_classes = (permissions.IsAuthenticated,IsOwnerOrReadOnly)
-    serializer_class = serializers.DataValuePairSerializer2
+    serializer_class   = serializers.DataValuePairSerializer2
 
     def get_queryset(self):
 
-        logger.debug('get_queryset')
-        to = time.time()        
+        logger.debug('get_queryset(kwargs= %s)' % str(self.kwargs))
+        to = time.time()
         serial_number = self.kwargs['serial_number']
         queryset = models.DataValue.objects.filter(device_instance__serial_number=serial_number).order_by('data_timestamp__measurement_timestamp')
         logger.debug("Query time             = %.3f" % (time.time() - to))        
+        
+        if self.kwargs.has_key('today'):
+            logger.debug("Filtering: todays data")        
+            queryset = queryset.filter(data_timestamp__measurement_timestamp__gte=datetime.date.today())
+
+        if self.kwargs.has_key('from') and self.kwargs.has_key('to'):
+            logger.debug("Filtering: from %s to %s" % (self.kwargs.has_key('from'), self.kwargs.has_key('to')))
+            start_date = datetime.datetime.strptime(self.kwargs['from'].split('.')[0],"%Y-%m-%d")
+            end_date   = datetime.datetime.strptime(self.kwargs['to'].split('.')[0],"%Y-%m-%d")
+            queryset = queryset.filter(data_timestamp__measurement_timestamp__range=(start_date, end_date))
+
         return queryset
+
+
+#######################################################################################
+#
+# API
+#
+def api_control(request):
+    logger.debug("api_control()")
+    cmd = request.GET.get('cmd')
+    val = request.GET.get('val')
+        
+    logger.debug("api_control(cmd = %s, val = %s)" % (cmd, str(val)))
+    if "ping" in cmd:
+        logger.debug("\trespondng to ping")
+        response = '"pong"'
+    elif "data_entry" in cmd:
+        logger.debug("\trespondng to data_entry : val= %s" % val)
+        submitted_data = simplejson.loads(val)         
+        response  = data_value_submission('now', submitted_data[0], submitted_data[1],request.META.get('REMOTE_ADDR'))
+    else:
+        response = '"none"' 
+        
+        
+    #response = '"main_io cmd=%s, val=%s time=%s"' %  (cmd,val,datetime.datetime.now())    
+    logger.debug('response = %s' % response)    
+    return HttpResponse(response, content_type="text/json")
+
+#######################################################################################
+# API
+#
+
+def api_submit_datavalue(request, datestamp, sn, val):
+    msg = "[SUBMITTED] datestamp: %s, sn: %s, val: %s" % (datestamp, sn, val)
+    logger.info(msg)
+    results = data_value_submission(datestamp, sn, val, request.META.get('REMOTE_ADDR'))
+    return HttpResponse(msg + results)
 
 #######################################################################################
 # API - usign django-rest-framework - PART 1

@@ -1,10 +1,16 @@
 import time
+
 from django.contrib.auth.models import User
 from django.forms import widgets
+from django.utils.log import getLogger
+
 from rest_framework import serializers
+
 from .models import Units, Manufacturer, TimeStamp, DataValue,\
                     DeviceInstance, PhysicalSignal, Device, DeviceGateway
 
+logger = getLogger("app")
+#######################################################################################
 
 class UserSerializer(serializers.ModelSerializer):
     device_instance = serializers.PrimaryKeyRelatedField(many=True)
@@ -103,10 +109,18 @@ class DataValuePairSerializer2(serializers.Serializer):
     @property
     def data(self):
 
-        out = []
-        for item in self.object:
-            utc_time_ms = time.mktime(item.data_timestamp.measurement_timestamp.timetuple())
-            value       = item.value
-            out.append([utc_time_ms, value])
-        return out
+        to = time.time()
+        logger.debug("Found %d items matching criteria " % self.object.count())
+        values_list = self.object.values_list('data_timestamp__measurement_timestamp','value')    
+        v = self.object.values_list('value',flat=True)
+        t = self.object.values_list('data_timestamp__measurement_timestamp',flat=True)
+        logger.debug("Making the list        = %.3f" % (time.time() - to))
+
+        logger.debug("Preparing array for json transmision")
+        data = []
+        for data_pt in values_list:        
+            data.append([time.mktime(data_pt[0].timetuple()),data_pt[1]])
+
+        logger.debug("Making value pair list = %.3f" % (time.time() - to))
+        return data
 

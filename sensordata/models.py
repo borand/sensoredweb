@@ -8,17 +8,17 @@
  The schema is simplified and adapted to my requirements
  
 """
+import time
+import datetime
 
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.db import models
-import datetime
-import time
-
 from django.utils.log import getLogger
+
 logger = getLogger("app")
 
-version = '2013.07.08' 
+version = '2013.07.16' 
 
 
 class Units(models.Model):
