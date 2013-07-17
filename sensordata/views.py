@@ -50,6 +50,19 @@ class DeviceInstanceView(ListView):
         else:
             return models.DeviceInstance.objects.filter(private=False).order_by('device')
 
+class HomeApi(TemplateView):
+
+    template_name = "sensordata/sensordata_api.html"
+
+    def get_context_data(self, **kwargs):
+        
+        msg = "you are api home @ %s" % (datetime.datetime.now())        
+        context = super(HomeApi, self).get_context_data(**kwargs)        
+        # context['device_instance'] = models.DeviceInstance.objects..filter(private=False).order_by('device')
+        #context['msg'] = msg
+        logger.info(msg)
+        return context
+
 
 
 

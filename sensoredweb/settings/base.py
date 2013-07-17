@@ -9,9 +9,9 @@ root = lambda * x: os.path.join(os.path.abspath(PROJECT_ROOT), *x)
 ###############################################################################
 import dj_database_url
 
-print "###############################################################################"
-print "#  BASE.PY                                                                    #"
-print '# root: ', root()
+# print "###############################################################################"
+# print "#  BASE.PY                                                                    #"
+# print '# root: ', root()
 
 DEBUG = False 
 TEMPLATE_DEBUG = DEBUG
@@ -126,7 +126,7 @@ TEMPLATE_DIRS = (
     root("templates"),
 )
 
-print '# Templates dir exists: ', os.path.exists(TEMPLATE_DIRS[0])
+# print '# Templates dir exists: ', os.path.exists(TEMPLATE_DIRS[0])
 
 DJANGO_APPS = (
     'django.contrib.auth',
@@ -197,7 +197,7 @@ LOGGING = {
         },
         'app': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'ERROR',
             'propagate': False,
         },
     }

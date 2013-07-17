@@ -1,10 +1,17 @@
 {% extends "_layouts/base.html" %}
 
 {% block page_title %}Sensordata Home{% endblock %}
+{% block page_header_title %}Sensordata Home{% endblock %}
 
 {% block page_content %}
 <h2>Sensordata Home</h2>
-<p><a href="/sensordata/devices">Devices</a></p>
+<div data-role="navbar">
+    <ul>
+        <li><a href="/sensordata/devices">Devices</a></li>
+        <li><a href="/sensordata/api">Sensordata API</a></li>
+    </ul>
+</div><!-- /navbar -->
 <hr>
+
 <p>{{msg}}</p>
 {% endblock %}
