@@ -8,16 +8,16 @@ from sensordata.models import DeviceGateway
 from sensordata.models import Location
 from sensordata.models import DeviceInstance
 from sensordata.models import DataValue
+from sensordata.models import DataObject
 from sensordata.models import Note
 
-# from sensordata.models import DataObject
 # from sensordata.models import DataFile
 # from sensordata.models import DeviceSystem
 # from sensordata.models import DataValueSet
 #
     
 class DataValueAdmin(admin.ModelAdmin):
-    list_display  = ['data_timestamp','value','device_instance']
+    list_display  = ['data_timestamp','device_instance','value']
     list_filter   = ('device_instance','data_timestamp')    
 #
 class DeviceGatewayAdmin(admin.ModelAdmin):
@@ -35,6 +35,8 @@ class DeviceAdmin(admin.ModelAdmin):
     list_editable = ['update_rate','max_range','min_range']
     list_filter   = ['manufacturer','device_name','model_number','actuator']
  
+class DataObjectAdmin(admin.ModelAdmin):
+    list_display  = ['data_timestamp','device_instance','value']
  
 admin.site.register(Units)
 admin.site.register(TimeStamp)
@@ -46,6 +48,6 @@ admin.site.register(Location)
 admin.site.register(DeviceInstance, DeviceInstanceAdmin)
 admin.site.register(DataValue, DataValueAdmin)
 admin.site.register(Note)
-#admin.site.register(DataFile)
+admin.site.register(DataObject, DataObjectAdmin)
 #admin.site.register(DeviceSystem)
 #admin.site.register(DataValueSet)
