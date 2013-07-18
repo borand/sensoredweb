@@ -21,7 +21,7 @@ urlpatterns += patterns('',
     url(r'^api-auth/', include('rest_framework.urls',
                                namespace='rest_framework')),
 )
-Add static server if required
+# Add static server if required
 urlpatterns += patterns('',
     (r'^static/(.*)$', 'django.views.static.serve', {
         'document_root': settings.STATIC_ROOT
