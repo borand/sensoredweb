@@ -31,7 +31,7 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         
-        msg = "you are home @ %s" % (datetime.datetime.now())        
+        msg = "Sensordata app loaded @ %s" % (datetime.datetime.now())        
         context = super(HomePageView, self).get_context_data(**kwargs)        
         # context['device_instance'] = models.DeviceInstance.objects..filter(private=False).order_by('device')
         context['msg'] = msg

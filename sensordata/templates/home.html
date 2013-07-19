@@ -5,13 +5,12 @@
 
 {% block page_content %}
 <h2>Sensordata Home</h2>
-<div data-role="navbar">
-    <ul>
+<hr>
+<ul data-role="listview">    
         <li><a href="/sensordata/devices">Devices</a></li>
         <li><a href="/sensordata/api">Sensordata API</a></li>
-    </ul>
-</div><!-- /navbar -->
-<hr>
+</ul>
 
+<hr>
 <p>{{msg}}</p>
 {% endblock %}
