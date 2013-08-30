@@ -50,9 +50,9 @@ urlpatterns = patterns('',
 
     url(r'^api/datavalue/$', api_views.DataValueList.as_view()),
     url(r'^api/datavalue/(?P<pk>[0-9]+)/$', api_views.DataValueDetail.as_view()),
-    url(r'^api/datavalue/sn/(?P<serial_number>[a-zA-Z0-9-_]+)/$', api_views.DataValueForDevDetail.as_view()),
-    url(r'^api/datavalue/sn/(?P<serial_number>[a-zA-Z0-9-_]+)/(?P<today>today)/$', api_views.DataValueForDevDetail.as_view()),    
-    url(r'^api/datavalue/sn/(?P<serial_number>[a-zA-Z0-9-_]+)/from/(?P<from>\d{4}\-\d{1,2}\-\d{1,2})/to/(?P<to>\d{4}\-\d{1,2}\-\d{1,2})/$', api_views.DataValueForDevDetail.as_view()),
+    url(r'^api/datavalue/sn/(?P<serial_number>[a-zA-Z0-9-_\.]+)/$', api_views.DataValueForDevDetail.as_view()),
+    url(r'^api/datavalue/sn/(?P<serial_number>[a-zA-Z0-9-_\.]+)/(?P<today>today)/$', api_views.DataValueForDevDetail.as_view()),    
+    url(r'^api/datavalue/sn/(?P<serial_number>[a-zA-Z0-9-_\.]+)/from/(?P<from>\d{4}\-\d{1,2}\-\d{1,2})/to/(?P<to>\d{4}\-\d{1,2}\-\d{1,2})/$', api_views.DataValueForDevDetail.as_view()),
 
     # url(r'^api/datavalue/(?P<device>[a-zA-Z0-9-_]+)/$', api_views.DataValueDetail.as_view()),
     # url(r'^api/datavalue/(?P<device>[a-zA-Z0-9-_]+)/(?P<today>)today','sensordata.views.api_get_datavalue', name='data_value_api'),    

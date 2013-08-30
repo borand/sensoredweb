@@ -18,7 +18,7 @@ from sensordata.models import Note
     
 class DataValueAdmin(admin.ModelAdmin):
     list_display  = ['data_timestamp','device_instance','value']
-    list_filter   = ('device_instance','data_timestamp')    
+    list_filter   = ('device_instance','device_instance__location','device_instance__serial_number')
 #
 class DeviceGatewayAdmin(admin.ModelAdmin):
     list_display  = ['name','address','port','active','protocol','process_pid']

@@ -18,7 +18,7 @@ from django.utils.log import getLogger
 
 logger = getLogger("app")
 
-version = '2013.07.16' 
+version = '2013.08.29' 
 
 
 class Units(models.Model):

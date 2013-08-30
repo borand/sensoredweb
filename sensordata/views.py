@@ -14,7 +14,6 @@ from django.utils.log import getLogger
 
 from sensordata import models
 
-
 logger = getLogger("app")
 #########################################################################
 #
