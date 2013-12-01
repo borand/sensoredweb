@@ -18,9 +18,9 @@ from rest_framework import permissions
 
 # sensordata libraries
 import serializers
-from .serializers import UnitsSerializer, ManufacturerSerializer, \
+from .serializers import UnitsSerializer2, ManufacturerSerializer, \
                         TimeStampSerializer, DataValueSerializer, DeviceInstanceSerializer,\
-                        UserSerializer,TimeStampSerializer,\
+                        UserSerializer,TimeStampSerializer,LocationSerializer,\
                         PhysicalSignalSerializer, DeviceSerializer, DeviceGatewaySerializer
 from . import models
 from .permissions import IsOwnerOrReadOnly
@@ -31,23 +31,38 @@ logger = getLogger("app")
 # API - usign django-rest-framework
 #
 
+# USER
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+# UNITS
 class UnitstList(generics.ListCreateAPIView):
     queryset = models.Units.objects.all()
-    serializer_class = UnitsSerializer
+    serializer_class = UnitsSerializer2
+
 class UnitsDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Units.objects.all()
-    serializer_class = UnitsSerializer
+    serializer_class = UnitsSerializer2
 
+# LOCATIONS
+class LocationList(generics.ListCreateAPIView):
+    queryset = models.Location.objects.all()
+    serializer_class = LocationSerializer
+
+class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Location.objects.all()
+    serializer_class = LocationSerializer
+
+# MANUFACTURER
 class ManufacturerList(generics.ListCreateAPIView):
     queryset = models.Manufacturer.objects.all()
     serializer_class = ManufacturerSerializer
+
 class ManufacturerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Manufacturer.objects.all()
     serializer_class = ManufacturerSerializer

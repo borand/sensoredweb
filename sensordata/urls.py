@@ -30,8 +30,8 @@ urlpatterns = patterns('',
 
     url(r'^api/man/$', api_views.ManufacturerList.as_view()),
 
-    url(r'^api/units/$', api_views.UnitstList.as_view()),
-    url(r'^api/units/(?P<pk>[0-9]+)/$', api_views.UnitsDetail.as_view()),
+    url(r'^api/location/$', api_views.LocationList.as_view()),
+    url(r'^api/location/(?P<pk>[0-9]+)/$', api_views.LocationDetail.as_view()),
 
     url(r'^api/physicalsignal/$', api_views.PhysicalSignalList.as_view()),
     url(r'^api/physicalsignal/(?P<pk>[0-9]+)/$', api_views.PhysicalSignalDetail.as_view()),

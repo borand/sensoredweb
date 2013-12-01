@@ -6,7 +6,7 @@ from django.utils.log import getLogger
 
 from rest_framework import serializers
 
-from .models import Units, Manufacturer, TimeStamp, DataValue,\
+from .models import Units, Location, Manufacturer, TimeStamp, DataValue,\
                     DeviceInstance, PhysicalSignal, Device, DeviceGateway
 
 logger = getLogger("app")
@@ -49,6 +49,14 @@ class UnitsSerializer(serializers.Serializer):
         # Create new instance
         return Units(**attrs)
 
+class UnitsSerializer2(serializers.ModelSerializer):
+    class Meta:
+        model = Units
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+
 class ManufacturerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Manufacturer
@@ -73,8 +81,8 @@ class DeviceGatewaySerializer(serializers.ModelSerializer):
         # fields = ('id', 'name', 'address','port','protocol','url','mac_address','active','process_name','process_pid','description')
 
 class DeviceInstanceSerializer(serializers.ModelSerializer):
-    user = serializers.Field(source='user.username')
-    device = serializers.Field(source='device.device_name')
+    #user = serializers.Field(source='user.username')
+    #device = serializers.Field(source='device.device_name')
     class Meta:
         model = DeviceInstance
         # fields = ('id','user', 'device','gateway','accept_from_gateway_only',\
