@@ -15,9 +15,9 @@
 <table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">
          <thead>
            <tr class="ui-bar-d">
-             <th data-priority="4">Device</th>             
-             <th data-priority="5">Model Number</th>
+             <th data-priority="4">Device</th>  
              <th data-priority="2"><abbr title="Serial Number">Serial Number</abbr></th>
+             <th data-priority="5">Location</th>             
              <th data-priority="1">Value</th>
              <th data-priority="3">Acquired on</th>
            </tr>
@@ -25,11 +25,11 @@
          <tbody>
          {% for dev in deviceinstance_list %}
            <tr>           	
-             <th>{{dev.device}}</th>             
-             <td>{{dev.device.model_number}}</td>
+             <th>{{dev.device}}</th>
              <td>{{dev.serial_number}}</td>
-             <td>{{dev.last_value.value}}</td>                 
-             <td>{{dev.last_value.data_timestamp}}</td>                 
+             <td>{{dev.location}}</td>
+             <td>{{dev.last_value.value}}</td>
+             <td>{{dev.last_value.data_timestamp}}</td>
            </tr>
            {% empty %}
     		<td>Sorry, no devices added. Check back soon!</td>
