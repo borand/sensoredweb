@@ -27,7 +27,7 @@ class DeviceGatewayAdmin(admin.ModelAdmin):
 #
 class DeviceInstanceAdmin(admin.ModelAdmin):
     list_display  = ['device','serial_number','gateway','location','physical_signal','active','private','accept_from_gateway_only']
-    list_editable = ['active','serial_number','private','accept_from_gateway_only']
+    list_editable = ['active','serial_number','private','location','accept_from_gateway_only']
     list_filter   = ['user','active','device','gateway','location']
     
 class DeviceAdmin(admin.ModelAdmin):
