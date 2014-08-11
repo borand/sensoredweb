@@ -21,7 +21,7 @@ from docopt import docopt
 
 
 old_host      = 'http://sensoredweb.herokuapp.com/sensordata/api'
-old_host_auth = ('pandas','misuszatek')
+old_host_auth = ('','')
 
 new_host      = '192.168.1.10';
 new_host      = '0.0.0.0';
