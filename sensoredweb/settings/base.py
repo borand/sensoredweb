@@ -198,7 +198,7 @@ LOGGING = {
         },
         'app': {
             'handlers': ['console'],
-            'level': 'ERROR',
+            'level': 'DEBUG',
             'propagate': False,
         },
     }

@@ -29,12 +29,25 @@ class HomePageView(TemplateView):
     template_name = "home.html"
 
     def get_context_data(self, **kwargs):
-        
-        msg = "Sensordata app loaded @ %s" % (datetime.datetime.now())        
-        context = super(HomePageView, self).get_context_data(**kwargs)        
+
+        msg = "Sensordata app loaded @ %s" % (datetime.datetime.now())
+        context = super(HomePageView, self).get_context_data(**kwargs)
         # context['device_instance'] = models.DeviceInstance.objects..filter(private=False).order_by('device')
         context['msg'] = msg
         logger.info(msg)
+        return context
+
+class GatewayMonView(TemplateView):
+
+    template_name = "gatewaymon.html"
+
+    def get_context_data(self, **kwargs):
+
+        msg = "GatewayMonView app loaded @ %s" % (datetime.datetime.now())
+        context = super(GatewayMonView, self).get_context_data(**kwargs)
+        context['msg'] = msg
+        logger.info(msg)
+        logger.info(kwargs)
         return context
 
 ########################################################################
@@ -48,6 +61,14 @@ class DeviceInstanceView(ListView):
             return models.DeviceInstance.objects.filter(user=self.request.user).order_by('device')
         else:
             return models.DeviceInstance.objects.filter(private=False).order_by('device')
+
+class GatewayView(ListView):
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated():
+            return models.DeviceGateway.objects.all()
+        else:
+            return models.DeviceGateway.objects.all()
 
 class HomeApi(TemplateView):
 

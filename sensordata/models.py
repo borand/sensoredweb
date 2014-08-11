@@ -18,7 +18,7 @@ from django.utils.log import getLogger
 
 logger = getLogger("app")
 
-version = '2013.08.29' 
+version = '2014.08.29'
 
 
 class Units(models.Model):
@@ -69,7 +69,12 @@ class TimeStamp(models.Model):
 
     def get_measurement_timestamp_in_ms(self):
         return time.mktime(self.measurement_timestamp.timetuple())*1000
-    ms = property(get_measurement_timestamp_in_ms)
+
+    def get_measurement_timestamp_in_sec(self):
+        return time.mktime(self.measurement_timestamp.timetuple())
+
+    ms  = property(get_measurement_timestamp_in_ms)
+    sec = property(get_measurement_timestamp_in_sec)
     
 class PhysicalSignal(models.Model):
     """
@@ -160,7 +165,8 @@ class DeviceInstance(models.Model):
     accept_from_gateway_only = models.BooleanField()
     location        = models.ForeignKey(Location, null=True)
     physical_signal = models.ForeignKey(PhysicalSignal)        
-    update_rate     = models.DecimalField("Min. Update Interval [sec]",max_digits=15, decimal_places=3, default=1) 
+    update_rate     = models.DecimalField("Min. Update Interval [sec]",max_digits=15, decimal_places=3, default=1)
+    update_threshold= models.DecimalField("Min. change in value to accept update",max_digits=15, decimal_places=3, default=0)
     active          = models.BooleanField()
     private         = models.BooleanField(default=False)
     serial_number   = models.CharField("Serial Number",max_length=255, unique=True)
@@ -235,7 +241,16 @@ class DataValue(models.Model):
         return [utc_time_ms, value]
     value_pair = property(get_value_pair)
         
-    
+
+class Experiment(models.Model):
+    """
+    Colleciton of measurements form a set of devices corresponding to an experiment
+    """
+    devices     = models.ManyToManyField(DeviceInstance)
+    location    = models.ForeignKey(Location, null=True)
+    description = models.TextField(blank=True)
+    start_date  = models.DateTimeField()
+    end_date    = models.DateTimeField()
 
 ##########################################################################
 #
@@ -310,13 +325,7 @@ class DataObject(models.Model):
 #         pass
 
 
-# class DeviceSystem(models.Model):
-#     """
-#     """        
-#     devices     = models.ManyToManyField(DeviceInstance)
-#     location    = models.ForeignKey(Location, null=True)
-#     description = models.TextField(blank=True)
-#     image_url   = models.URLField(blank=True);
+
     
 # class DataValueSet(models.Model):
 #      datavalue   = models.ManyToManyField(DataValue)

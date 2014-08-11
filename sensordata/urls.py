@@ -10,6 +10,8 @@ urlpatterns = patterns('',
     url(r'^$',views.HomePageView.as_view(), name='sensordata_home'),
     url(r'^ping$','sensordata.views.ping', name='sensordata_ping'),    
     url(r"^devices/", views.DeviceInstanceView.as_view(), name="sensordata_device_instance_list"),
+    url(r"^gateways/", views.GatewayView.as_view(), name="sensordata_gateway_list"),
+    url(r"^gatewaymon/(?P<name>\w+)/$", views.GatewayMonView.as_view(), name="sensordata_gatewaymon"),
     
     
     ## SUBMIT DATA

@@ -1,0 +1,29 @@
+{% extends "_layouts/base.html" %}
+
+{% block page_title %}Device Instance List {% endblock %}
+
+{% block page_content %}
+<h2>Gateway List</h2>
+
+<table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">
+         <thead>
+           <tr class="ui-bar-d">
+             <th data-priority="4">Name</th>
+             <th data-priority="2"><abbr title="Serial Number">Address</abbr></th>
+             <th data-priority="5">Port</th>
+           </tr>
+         </thead>
+         <tbody>
+         {% for dev in devicegateway_list %}
+           <tr>
+             <th>{{dev.name}}</th>
+             <td>{{dev.address}}</td>
+             <td>{{dev.port}}</td>
+           </tr>
+           {% empty %}
+    		<td>Sorry, no devices added. Check back soon!</td>
+    	    {% endfor %}
+         </tbody>
+       </table>
+
+{% endblock %}
