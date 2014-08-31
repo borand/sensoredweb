@@ -1,0 +1,16 @@
+{% extends "_layouts/base.html" %}
+
+{% block page_title %}Device Instance Data View{% endblock %}
+
+{% block extra_head %}
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="{{ STATIC_URL }}chart.js"></script>
+
+{% endblock %}
+
+{% block page_content %}
+<h2>Device Instance Data View</h2>
+<p>Chart</p>
+<div id="chart"></div>
+
+{% endblock %}

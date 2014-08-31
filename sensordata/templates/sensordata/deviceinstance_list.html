@@ -24,8 +24,9 @@
          </thead>
          <tbody>
          {% for dev in deviceinstance_list %}
-           <tr>           	
-             <th>{{dev.device}}</th>
+           <tr>
+
+             <th><a href="/sensordata/devices/{{dev.id}}/">{{dev.device}}</a></th>
              <td>{{dev.serial_number}}</td>
              <td>{{dev.location}}</td>
              <td>{{dev.last_value.value}}</td>

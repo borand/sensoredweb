@@ -39,7 +39,7 @@ class HomePageView(TemplateView):
 
 class GatewayMonView(TemplateView):
 
-    template_name = "gatewaymon.html"
+    template_name = "gateway_console.html"
 
     def get_context_data(self, **kwargs):
 
@@ -61,6 +61,18 @@ class DeviceInstanceView(ListView):
             return models.DeviceInstance.objects.filter(user=self.request.user).order_by('device')
         else:
             return models.DeviceInstance.objects.filter(private=False).order_by('device')
+
+class DeviceInstanceDataView(TemplateView):
+
+    template_name = "sensordata/deviceinstance_data_view.html"
+
+    def get_context_data(self, **kwargs):
+
+        msg = "you are api home @ %s" % (datetime.datetime.now())
+        if self.request.user.is_authenticated():
+            serial_number = 0;
+            queryset = models.DataValue.objects.filter(device_instance__serial_number=serial_number).order_by('data_timestamp__measurement_timestamp')
+            return queryset
 
 class GatewayView(ListView):
 

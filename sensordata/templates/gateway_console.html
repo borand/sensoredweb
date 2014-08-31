@@ -1,0 +1,139 @@
+{% extends "_layouts/base.html" %}
+
+{% block page_title %}Sensordata Home{% endblock %}
+{% block page_header_title %}Sensordata Home{% endblock %}
+
+{% block page_content %}
+
+
+		<div data-role="tabs"  data-theme="a">
+
+			<div data-role="navbar">
+				<ul>
+					<li>
+						<a href="#tab_debug" data-icon="comment">Debug</a>
+					</li>
+					<li>
+						<a href="#tab_console" data-icon="comment">Console</a>
+					</li>
+					<li>
+						<a href="#tab_settings"  data-icon="gear">Settings</a>
+					</li>
+				</ul>
+			</div>
+			<div role="main" class="ui-content">
+				<!-- ######################################################################## -->
+				<!-- TAB CONSOLE -->
+				<div id="tab_console">
+					<div class="ui-corner-all custom-corners">
+						<div class="ui-bar ui-bar-a">
+							<h3>Console view</h3>
+						</div>
+						<div class="ui-body ui-body-a">
+							<!-- <div data-role="content"> -->
+							<textarea rows="15" name="textarea" id="console" data-role="textarea" type="etc."></textarea>
+
+							<div class="ui-field-contain">
+							<label for="select-chan" class="select">Channel:</label>
+							<select name="select-chan" id="select-chan" data-native-menu="false" data-mini="true" data-inline="true" data-theme="b">
+								<option>Device</option>
+								<option value="All">All</option>
+
+							</select>
+							</div>
+
+							<div class="ui-field-contain">
+							<label for="text-basic">Command</label>
+							<input type="text" name="text-basic" id="json_cmd" value="" data-inline="true" data-theme="b">
+							</div>
+
+
+
+						</div><!-- /content -->
+					</div>
+				</div><!-- TAB CONSOLE -->
+				<!-- ######################################################################## -->
+				<!-- TAB DEBUG -->
+				<div id="tab_debug">
+					<div class="ui-corner-all custom-corners">
+						<div class="ui-bar ui-bar-a">
+							<h3>Debug Console</h3>
+						</div>
+						<div class="ui-body ui-body-a">
+
+							<!-- <div data-role="content"> -->
+							<label for="textarea">Response</label>
+							<textarea rows="15" name="textarea" id="debug_console" data-role="textarea" type="etc."></textarea>
+							<a class="ui-btn ui-btn-inline ui-icon-delete ui-btn-icon-left" id="button_clear_debug_console">Clear History</a>
+
+
+						</div><!-- /content -->
+
+						<div class="ui-bar ui-bar-a">
+							<h3>Debug Settings</h3>
+						</div>
+
+						<div class="ui-body ui-body-a">
+
+							<div class="ui-field-contain">
+								<fieldset data-role="controlgroup" data-type="horizontal">
+									<legend>Debug Settings</legend>
+									<input type="checkbox" name="checkbox-6" id="debug_irq" class="custom">
+									<label for="debug_irq">IRQ</label>
+									<input type="checkbox" name="checkbox-6" id="debug_chart" class="custom">
+									<label for="debug_chart">Chart</label>
+
+									<input type="checkbox" name="checkbox-6" id="debug_websocket" class="custom">
+									<label for="debug_websocket">Websocket</label>
+									<input type="checkbox" name="checkbox-7" id="debug_js" class="custom">
+									<label for="debug_js"><em>Browser</em></label>
+									<input type="checkbox" name="checkbox-8" id="debug_all" class="custom">
+									<label for="debug_all">All</label>
+								</fieldset>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- TAB DEBUG -->
+				<!-- ######################################################################## -->
+				<!-- TAB SETTINGS -->
+				<div id="tab_settings">
+					<div class="ui-corner-all custom-corners">
+						<div class="ui-bar ui-bar-a">
+							<h3>Websocket Settings</h3>
+						</div>
+						<div class="ui-body ui-body-a">
+							<div class="ui-grid-b">
+
+								<div class="ui-block-a">
+									<label for="hostname">Host name</label>
+									<input type="text" name="hostname" id="hostname" value={{host_ip}} data-mini="true">
+								</div>
+
+								<div class="ui-block-b">
+									<label for="hostport">Host port</label>
+									<input type="number" name="number" pattern="[0-9]*" id="hostport" value="8888" data-mini="true">
+								</div>
+								<div class="ui-block-c">
+									<label for="hosturl">Host url</label>
+									<input type="text" name="text" id="hosturl" value="sub" data-mini="true">
+								</div>
+
+							</div><!-- /grid-b -->
+						</div>
+
+						<div class="ui-body ui-body-a">
+							<a class="ui-btn ui-btn-inline ui-icon-phone ui-btn-icon-left" id="button_connect">Connect</a>
+							<button class="ui-btn ui-btn-inline" data-theme="b" id="button_disconnect">Disconnect</button>
+						</div>
+
+					</div>
+				</div>
+
+			</div><!-- TAB SETTINGS -->
+			<!-- ######################################################################## -->
+
+
+
+<p>{{msg}}</p>
+{% endblock %}
