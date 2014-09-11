@@ -83,8 +83,10 @@ function empty_data() {
 	return data;
 };
 
-function draw_chart(render_to) {
+function draw_chart(data) {
 	
+	render_to = 'chart'
+
 	Highcharts.setOptions({
 		global : {
 			useUTC : false
@@ -138,16 +140,16 @@ function draw_chart(render_to) {
 			name : 'Data 0',
 			color: '#00FF00',
 			step: true,
-			data : empty_data(),			
+			data : data,
 		}]
 	});
 }
 
-function draw_plot() {
+function draw_plot(data) {
 	plot = new Highcharts.Chart({
 		chart : {
 			renderTo : 'chart',
-			defaultSeriesType : 'scatter',
+			//defaultSeriesType : 'line',
 			zoomType : 'xy'
 		},
 		title : {
@@ -161,6 +163,7 @@ function draw_plot() {
 				enabled : true,
 				text : 'Time'
 			},
+			type: 'datetime',
 			startOnTick : true,
 			endOnTick : true,
 			showLastLabel : true
@@ -198,7 +201,7 @@ function draw_plot() {
 		series : [{
 			name : 'Sensor',
 			color : 'rgba(223, 83, 83, .5)',
-			data : [[0, 0],[1,1]]
+			data : data
 
 		}]
 	});
@@ -309,6 +312,12 @@ function connect_to_websocket_host(){
 //
 //
 $(document).ready(function() {	
-	console.log('chart.js')
-	draw_plot();
+	var sn_value = $('#sn_value').val();	
+	var data_url = '/sensordata/api/datavalue/sn/'+ sn_value +'/.json'
+	console.log(data_url)	
+	$.getJSON(data_url, function (data) {
+		console.log(data);
+		draw_chart(data);
+	});
+
 });

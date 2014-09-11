@@ -67,12 +67,17 @@ class DeviceInstanceDataView(TemplateView):
     template_name = "sensordata/deviceinstance_data_view.html"
 
     def get_context_data(self, **kwargs):
-
-        msg = "you are api home @ %s" % (datetime.datetime.now())
+        pk = kwargs.get('pk',0)        
+        logger.info(kwargs)
+        msg = format(pk)
+        context = super(DeviceInstanceDataView, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated():
-            serial_number = 0;
-            queryset = models.DataValue.objects.filter(device_instance__serial_number=serial_number).order_by('data_timestamp__measurement_timestamp')
-            return queryset
+            serial_number = pk;
+            dev = models.DeviceInstance.objects.filter(pk=pk)
+            # queryset = models.DataValue.objects.filter(device_instance__serial_number=serial_number).order_by('data_timestamp__measurement_timestamp')
+            logger.info("serial_number = {0}".format(dev[0].serial_number))
+            context['SN'] = dev[0].serial_number
+            return context
 
 class GatewayView(ListView):
 

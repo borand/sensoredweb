@@ -3,14 +3,14 @@
 {% block page_title %}Device Instance Data View{% endblock %}
 
 {% block extra_head %}
-<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="{{ STATIC_URL }}highstock.js"></script>
 <script src="{{ STATIC_URL }}chart.js"></script>
-
 {% endblock %}
 
 {% block page_content %}
 <h2>Device Instance Data View</h2>
-<p>Chart</p>
 <div id="chart"></div>
+<label for="sn_value">Host url</label>
+<input type="text" name="text" id="sn_value" value="{{SN}}" data-mini="true">
 
 {% endblock %}

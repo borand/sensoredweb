@@ -98,7 +98,7 @@ class Device(models.Model):
     max_range    = models.DecimalField(max_digits=15, decimal_places=3, default=1)
     min_range    = models.DecimalField(max_digits=15, decimal_places=3, default=0)          
     model_number = models.CharField(max_length=255, blank=True)
-    actuator     = models.BooleanField(blank=True)
+    actuator     = models.BooleanField(blank=True, default=False)
     protocol     = models.CharField("Protocol", max_length=255, blank=True)
     image_url    = models.URLField(blank=True);        
     callibration = models.TextField(blank=True) # calibration storing JSON object
@@ -162,12 +162,12 @@ class DeviceInstance(models.Model):
     user            = models.ForeignKey(User, default=1,related_name='device_instance')
     device          = models.ForeignKey(Device)    
     gateway         = models.ForeignKey(DeviceGateway)
-    accept_from_gateway_only = models.BooleanField()
+    accept_from_gateway_only = models.BooleanField(default=False)
     location        = models.ForeignKey(Location, null=True)
     physical_signal = models.ForeignKey(PhysicalSignal)        
     update_rate     = models.DecimalField("Min. Update Interval [sec]",max_digits=15, decimal_places=3, default=1)
     update_threshold= models.DecimalField("Min. change in value to accept update",max_digits=15, decimal_places=3, default=0)
-    active          = models.BooleanField()
+    active          = models.BooleanField(default=True)
     private         = models.BooleanField(default=False)
     serial_number   = models.CharField("Serial Number",max_length=255, unique=True)
     

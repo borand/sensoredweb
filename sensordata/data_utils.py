@@ -55,7 +55,7 @@ def data_value_submission(datestamp, serial_number, data_value, remote_addr):
     """
     Handles submission of data from remote sensors into the data base.
     """
-
+    
     msg = "  data_value_submission(%s, %s, %s, %s)" % (datestamp, serial_number, data_value, remote_addr)
     logger.debug(msg)
 

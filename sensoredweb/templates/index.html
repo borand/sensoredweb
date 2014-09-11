@@ -1,10 +1,20 @@
 {% extends "_layouts/base.html" %}
 {% load url from future %}
 
+{% block extra_head %}
+<script src="{{ STATIC_URL }}highstock.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script src="http://code.highcharts.com/modules/solid-gauge.src.js"></script>
+<script src="{{ STATIC_URL }}home.js"></script>
+{% endblock extra_head %}
+
 {% block page_title %}Sensored Web{% endblock %}
 
 {% block page_content %}
 
-<h2>Home</h2>
+<h2>Summary</h2>
+
+<div id="container-speed" style="width: 300px; height: 200px; float: left"></div>
+<div id="container-rpm"   style="width: 300px; height: 200px; float: left"></div>
 
 {% endblock %}
