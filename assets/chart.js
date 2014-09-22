@@ -313,7 +313,7 @@ function connect_to_websocket_host(){
 //
 $(document).ready(function() {	
 	var sn_value = $('#sn_value').val();	
-	var data_url = '/sensordata/api/datavalue/sn/'+ sn_value +'/.json'
+	var data_url = '/sensordata/api/datavalue/sn/'+ sn_value +'/today/.json'
 	console.log(data_url)	
 	$.getJSON(data_url, function (data) {
 		console.log(data);

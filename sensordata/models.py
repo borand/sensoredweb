@@ -61,11 +61,19 @@ class TimeStamp(models.Model):
     Model describing events when the measurements were taken and when they were actually submitted to the server.
     In case of offline data loggers the time at which the measuremnt was taken will not be the same as the submission time.    
     """
-    server_timestamp      = models.DateTimeField(auto_now=True, auto_now_add=True)
-    measurement_timestamp = models.DateTimeField()
+    server_timestamp          = models.DateTimeField(auto_now=True, auto_now_add=True)
+    measurement_timestamp     = models.DateTimeField()
+    measurement_timestamp_sec = models.PositiveIntegerField(default=0)
     
     def __unicode__(self):
         return str(self.measurement_timestamp)
+
+    def save(self, *args, **kwargs):
+        #do_something()
+        self.measurement_timestamp_sec = round(time.mktime(self.measurement_timestamp.timetuple()))
+        super(TimeStamp, self).save(*args, **kwargs) # Call the "real" save() method.        
+        pass
+        #do_something_else()
 
     def get_measurement_timestamp_in_ms(self):
         return time.mktime(self.measurement_timestamp.timetuple())*1000

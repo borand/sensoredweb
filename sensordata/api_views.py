@@ -181,7 +181,7 @@ def api_submit_datavalue(request, datestamp, sn, val):
     msg = "[SUBMITTED] datestamp: %s, sn: %s, val: %s" % (datestamp, sn, val)
     logger.info(msg)
     try:
-        results = data_value_submission(datestamp, sn, val, request.META.get('REMOTE_ADDR'))        
+        results = data_value_submission(datestamp, sn, val, request.META.get('REMOTE_ADDR'))
     except Exception as E:                
         results = ' Exception: ' + E.message
     return HttpResponse(msg + results)
