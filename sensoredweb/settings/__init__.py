@@ -1,6 +1,6 @@
 from .base import *
 
-try:        
+try:
     from .local import *
     # print "Loaded local settings"
 except ImportError:

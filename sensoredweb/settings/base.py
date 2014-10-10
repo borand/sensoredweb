@@ -46,15 +46,16 @@ DJANGO_APPS = (
     'django.contrib.staticfiles',
 )
 
-THIRD_PARTY_APPS = (    
+THIRD_PARTY_APPS = (
     'rest_framework',
+    'djcelery',
 )
 
-LOCAL_APPS =(
+LOCAL_APPS = (
     'sensordata',
 )
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS  + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -104,7 +105,13 @@ TEMPLATE_DIRS = (
     root("templates"),
 )
 
-print "TEMPLATE_DIRS :" , TEMPLATE_DIRS
+print " TEMPLATE_DIRS : ", TEMPLATE_DIRS
+
+# CELERY SETTINGS
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 MEDIA_ROOT = root("..", "uploads")
 STATIC_ROOT = root("..", "static")
@@ -137,7 +144,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+#CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend',
 
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
 LOGGING = {
     'version': 1,
