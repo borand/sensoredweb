@@ -21,10 +21,10 @@ from docopt import docopt
 
 
 old_host      = 'http://sensoredweb.herokuapp.com/sensordata/api'
-old_host_auth = ('','')
+old_host_auth = ('borand','heroku@fzeq44Qh')
 
 new_host      = '192.168.1.10';
-new_host      = '0.0.0.0';
+#new_host      = '0.0.0.0';
 new_host_auth = ('andrzej','admin')
 root_url      =  'http://{0}:8000/sensordata/api'.format(new_host)
 headers       = {'content-type': 'application/json'}

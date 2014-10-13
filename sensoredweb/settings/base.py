@@ -112,6 +112,8 @@ BROKER_URL = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+#CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend',
 
 MEDIA_ROOT = root("..", "uploads")
 STATIC_ROOT = root("..", "static")
@@ -144,9 +146,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-#CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend',
 
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
 LOGGING = {
     'version': 1,

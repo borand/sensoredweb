@@ -213,7 +213,7 @@ class DataValueManager(models.Manager):
         start_date = datetime.datetime.strptime(kwargs['from'].split('.')[0],"%Y-%m-%d")
         end_date   = datetime.datetime.strptime(kwargs['to'].split('.')[0],"%Y-%m-%d")
 
-        items = self.model.objects.filter(data_timestamp__measurement_timestamp__range=(start_date, end_date))        
+        items = self.model.objects.filter(data_timestamp__measurement_timestamp__range=(start_date, end_date))
         return items
 
 class DataValue(models.Model):

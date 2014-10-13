@@ -3,6 +3,8 @@ from __future__ import absolute_import
 from celery import shared_task
 
 import redis
+import time
+from anyjson import serialize
 
 @shared_task
 def test(param):
@@ -24,5 +26,28 @@ def xsum(numbers):
     return sum(numbers)
 
 
-def send_message(**kwargs):
-	pass
+@shared_task
+def ON(**kwargs):
+	r = redis.Redis()
+	r.publish('192.168.1.200:-cmd','on')
+
+@shared_task
+def OFF(**kwargs):
+	r = redis.Redis()
+	r.publish('192.168.1.200:-cmd','off')
+
+@shared_task
+def flash(**kwargs):
+	r = redis.Redis()
+	r.publish('192.168.1.200:-cmd','on')
+	time.sleep(2)	
+	r.publish('192.168.1.200:-cmd','off')
+
+@shared_task
+def send_insteon_cmd(*arg, **kwargs):
+	r = redis.Redis()
+	address = arg[0]
+	cmd     = arg[1]
+	val     = arg[2]
+	insteon_msg = serialize([address, cmd, val])
+	r.publish('InsteonPLM',insteon_msg)
