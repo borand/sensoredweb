@@ -48,6 +48,7 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     'rest_framework',
+    'debug_toolbar',
     'djcelery',
 )
 
@@ -105,7 +106,7 @@ TEMPLATE_DIRS = (
     root("templates"),
 )
 
-print " TEMPLATE_DIRS : ", TEMPLATE_DIRS
+#print " TEMPLATE_DIRS : ", TEMPLATE_DIRS
 
 # CELERY SETTINGS
 BROKER_URL = 'redis://localhost:6379/0'
