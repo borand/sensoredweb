@@ -105,7 +105,7 @@ TEMPLATE_DIRS = (
     root("templates"),
 )
 
-print " TEMPLATE_DIRS : ", TEMPLATE_DIRS
+# print " TEMPLATE_DIRS : ", TEMPLATE_DIRS
 
 # CELERY SETTINGS
 BROKER_URL = 'redis://localhost:6379/0'
