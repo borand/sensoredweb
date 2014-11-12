@@ -1,0 +1,54 @@
+{% extends "_layouts/base.html" %}
+{% load url from future %}
+
+{% block page_title %}Debug{% endblock %}
+
+{% block extra_head %}
+<script src="{{ STATIC_URL }}debug.js"></script>
+{% endblock %}
+
+{% block page_content %}
+<div id="tab_debug">
+
+	<div class="ui-corner-all custom-corners">
+
+		<div class="ui-bar ui-bar-a">
+			<h3>Websocket Settings <a class="ui-btn-right" id="live" data-theme="a">OFFLINE</a></h3>
+		</div>
+		<div class="ui-body ui-body-a">
+			<div class="ui-grid-c">
+
+				<div class="ui-block-a">
+					<label for="hostname">Host name</label>
+					<input type="text" name="hostname" id="hostname" value="127.0.0.1" data-mini="true">
+				</div>
+
+				<div class="ui-block-b">
+					<label for="hostport">Host port</label>
+					<input type="number" name="number" pattern="[0-9]*" id="hostport" value="8888" data-mini="true">
+				</div>
+				<div class="ui-block-c">
+					<label for="hosturl">Host url</label>
+					<input type="text" name="text" id="hosturl" value="sub" data-mini="true">
+				</div>
+				<div class="ui-block-d">
+					<a class="ui-btn ui-btn-inline" id="button_connect" data-mini="true">Connect</a>
+				</div>
+
+			</div><!-- /grid-b -->
+		</div>
+
+		<div class="ui-body ui-body-a">
+
+			<!-- <div data-role="content"> -->
+			<label for="textarea">Response</label>
+			<textarea rows="15" name="textarea" id="console" data-role="textarea" type="etc."></textarea>
+			<a class="ui-btn ui-btn-inline ui-icon-delete ui-btn-icon-left" id="button_clear_debug_console">Clear History</a>
+		</div><!-- /content -->
+
+
+
+	</div>
+</div>
+
+{% endblock %}

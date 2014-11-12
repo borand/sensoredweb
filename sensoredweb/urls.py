@@ -11,6 +11,9 @@ urlpatterns = patterns('',
 	url(r"^$", views.HomepageView.as_view(), name="home"),    
 	url(r'^admin/', include(admin.site.urls)),
     url(r"^about/", views.AboutView.as_view(), name="about"),
+    url(r"^debug/", views.DebugView.as_view(), name="debug"),
+    url(r"^insteon/", views.InsteonView.as_view(), name="insteon"),
+    url(r"^cmd/$", views.cmd_handler, name="cmd"),
     (r'^sensordata/', include('sensordata.urls', namespace="sensordata")),
 
     

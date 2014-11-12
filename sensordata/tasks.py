@@ -1,10 +1,12 @@
 from __future__ import absolute_import
 
-from celery import shared_task
+from celery import shared_task, task
 
 import redis
 import time
 from anyjson import serialize
+
+from ablib.daq.datastore import submit
 
 @shared_task
 def test(param):
@@ -25,7 +27,7 @@ devices = {
 '09.8E.94' : 'living_room',
 '18.98.AA' : 'livingroom_dimmer',
 '16.83.87' : 'livingroom_lamp_sw',
-'14.a1.28' :'20.1f.11' 'outdoor',
+'14.a1.28' : 'outdoor',
 '20.1f.11' : 'light',
 '1D.AD.86' : 'bedroom',
 '1B.7A.50' : 'unused_se',

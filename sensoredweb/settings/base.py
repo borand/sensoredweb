@@ -43,11 +43,12 @@ DJANGO_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',    
 )
 
 THIRD_PARTY_APPS = (
     'rest_framework',
+    #'debug_toolbar',
     'djcelery',
 )
 
@@ -104,8 +105,6 @@ TEMPLATE_DIRS = (
     #'%s/../../templates/' % PROJECT_ROOT,
     root("templates"),
 )
-
-# print " TEMPLATE_DIRS : ", TEMPLATE_DIRS
 
 # CELERY SETTINGS
 BROKER_URL = 'redis://localhost:6379/0'
