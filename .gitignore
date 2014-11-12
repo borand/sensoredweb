@@ -5,3 +5,8 @@ local.py
 venv
 *.db
 .coverage
+*.pid
+static/
+db.sqlite3
+.idea
+v1.7/
