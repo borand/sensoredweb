@@ -17,11 +17,41 @@
 		</div>
 		<div class="ui-body ui-body-a">
 		<form>
-		    <label for="lightbulb">Slider : {{ msg }}</label>
+		    <label for="lightbulb">Slider : {{ msg_2 }}</label>
 		    <input type="range" name="lightbulb" id="lightbulb" data-highlight="true" min="0" max="255" value="0">
 		</form>			
 		</div>
 	</div>
 </div>
 
+<table data-role="table" id="insteon-devices" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">
+         <thead>
+           <tr class="ui-bar-d">
+             <th data-priority="4">Device</th>  
+             <th data-priority="2"><abbr title="Serial Number">Serial Number</abbr></th>
+             <th data-priority="5">Location</th>             
+             <th data-priority="1">Value</th>
+             <th data-priority="3">Acquired on</th>
+           </tr>
+         </thead>
+
+         <tbody>
+         {% for dev in insteon %}
+           <tr>
+             <th><a href="/sensordata/devices/{{dev.id}}/">{{dev.device}}</a></th>
+             <td>{{dev.serial_number}}</td>
+             <td>{{dev.location}}</td>
+             <td>{{dev.last_value.value}}</td>
+             <td>{{dev.last_value.data_timestamp}}</td>
+           </tr>
+           {% empty %}
+    		<td>Sorry, no devices added. Check back soon!</td>
+    	    {% endfor %} 
+         </tbody>
+       </table>
+
 {% endblock %}
+
+
+
+

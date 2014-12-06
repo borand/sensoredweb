@@ -43,11 +43,10 @@ class GatewayMonView(TemplateView):
 
     def get_context_data(self, **kwargs):
 
-        msg = "GatewayMonView app loaded @ %s" % (datetime.datetime.now())
+        msg = "GatewayMonView app loaded"
         context = super(GatewayMonView, self).get_context_data(**kwargs)
-        context['msg'] = msg
-        logger.info(msg)
-        logger.info(kwargs)
+        context['msg_2'] = msg
+        print context
         return context
 
 ########################################################################

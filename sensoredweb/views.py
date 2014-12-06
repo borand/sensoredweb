@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.views.generic import TemplateView
+from sensordata import models
 import redis
 
 def cmd_handler(request):
@@ -27,6 +28,9 @@ class InsteonView(TemplateView):
 
     def get_context_data(self, **kwargs):        
         msg = "you are api home"
+        
         context = super(InsteonView, self).get_context_data(**kwargs)
         context['msg'] = msg
+        context['insteon'] = models.DeviceInstance.objects.filter(device__manufacturer__name="Insteon")
+        print context
         return context
