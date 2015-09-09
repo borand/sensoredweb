@@ -8,6 +8,8 @@ from anyjson import serialize
 
 from ablib.daq.datastore import submit
 
+insteon_cmd_chan = 'cmd:insteon'
+
 @shared_task
 def test(param):
     return 'The test task executed with argument "%s" ' % param
@@ -19,7 +21,7 @@ def send_insteon_cmd(*arg, **kwargs):
 	cmd         = arg[1]
 	val         = arg[2]
 	insteon_msg = serialize([address, cmd, val])
-	r.publish('insteon',insteon_msg)
+	r.publish(insteon_cmd_chan,insteon_msg)
 
 devices = {
 '19.74.73' : 'Serial PLM',
@@ -44,7 +46,7 @@ def good_morning(*arg, **kwargs):
 	]
 	for msg in msgs:
 		insteon_msg = serialize(msg)
-		r.publish('insteon',insteon_msg)
+		r.publish(insteon_cmd_chan,insteon_msg)
 
 @shared_task
 def main_floor_on(*arg, **kwargs):
@@ -56,7 +58,7 @@ def main_floor_on(*arg, **kwargs):
 	]
 	for msg in msgs:
 		insteon_msg = serialize(msg)
-		r.publish('insteon',insteon_msg)
+		r.publish(insteon_cmd_chan,insteon_msg)
 
 @shared_task
 def school_time(*arg, **kwargs):
@@ -68,4 +70,21 @@ def school_time(*arg, **kwargs):
 	]
 	for msg in msgs:
 		insteon_msg = serialize(msg)
-		r.publish('insteon',insteon_msg)
+		r.publish(insteon_cmd_chan,insteon_msg)
+
+
+@shared_task
+def get_status(*arg, **kwargs):
+	r           = redis.Redis()
+	msg = {"cmd" : "GetStatusOfAllDevices"}
+	insteon_msg = serialize(msg)
+	#r.publish(insteon_cmd_chan,insteon_msg)
+	r.publish(insteon_cmd_chan, '{\"cmd\": \"GetStatusOfAllDevices\"}')
+
+@shared_task
+def run_cmd(*arg, **kwargs):
+	r           = redis.Redis()
+	msg = {"cmd" : kwargs.get("cmd",'Ping')}
+	insteon_msg = serialize(msg)	
+	r.publish(insteon_cmd_chan, '{\"cmd\": \"GetStatusOfAllDevices\"}')
+

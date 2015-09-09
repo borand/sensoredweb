@@ -61,7 +61,7 @@ class TimeStamp(models.Model):
     Model describing events when the measurements were taken and when they were actually submitted to the server.
     In case of offline data loggers the time at which the measuremnt was taken will not be the same as the submission time.    
     """
-    server_timestamp          = models.DateTimeField(auto_now=True, auto_now_add=True)
+    server_timestamp          = models.DateTimeField(auto_now_add=True)
     measurement_timestamp     = models.DateTimeField()
     measurement_timestamp_sec = models.PositiveIntegerField(default=0)
     
@@ -126,7 +126,7 @@ class DeviceGateway(models.Model):
     protocol - describes com protocol between gateway and client node
     """
     name          = models.CharField("Name", max_length=255, default="localhost")
-    address       = models.IPAddressField("Address", default="127.0.0.1")
+    address       = models.GenericIPAddressField("Address", default="127.0.0.1")
     port          = models.IntegerField("Port",default=8000)
     protocol      = models.CharField("Protocol", max_length=255, blank=True, default="http")
     url           = models.URLField(blank=True)
