@@ -35,6 +35,8 @@ devices = {
 '1B.7A.50' : 'unused_se',
 }
 
+
+
 @shared_task
 def good_morning(*arg, **kwargs):
 	r           = redis.Redis()
@@ -84,7 +86,6 @@ def get_status(*arg, **kwargs):
 @shared_task
 def run_cmd(*arg, **kwargs):
 	r           = redis.Redis()
-	msg = {"cmd" : kwargs.get("cmd",'Ping')}
-	insteon_msg = serialize(msg)	
-	r.publish(insteon_cmd_chan, '{\"cmd\": \"GetStatusOfAllDevices\"}')
+	msg  = {"cmd" : kwargs.get("cmd",'GetLightLevel'), "addr" : kwargs.get("addr",'20.1f.11'), "val" : kwargs.get("val",0)}
+	r.publish(insteon_cmd_chan, insteon_msg)
 
