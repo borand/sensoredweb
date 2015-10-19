@@ -91,6 +91,7 @@ def get_status(*arg, **kwargs):
 def run_cmd(*arg, **kwargs):
 	r           = redis.Redis()
 	msg  = {"cmd" : kwargs.get("cmd",'GetLightLevel'), "addr" : kwargs.get("addr",'20.1f.11'), "val" : kwargs.get("val",0)}
-	r.publish(insteon_cmd_chan, msg)
+	insteon_msg = serialize(msg)
+	r.publish(insteon_cmd_chan, insteon_msg)
 	return 'run_cmd: ' + str(msg)
 
