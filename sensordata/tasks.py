@@ -10,19 +10,6 @@ from ablib.daq.datastore import submit
 
 insteon_cmd_chan = 'cmd:insteon'
 
-@shared_task
-def test(param):
-    return 'The test task executed with argument "%s" ' % param
-
-@shared_task
-def send_insteon_cmd(*arg, **kwargs):
-	r           = redis.Redis()
-	address     = arg[0]
-	cmd         = arg[1]
-	val         = arg[2]
-	insteon_msg = serialize([address, cmd, val])
-	r.publish(insteon_cmd_chan,insteon_msg)
-
 devices = {
 '19.74.73' : 'Serial PLM',
 '18.1d.04' : 'dining_room',
@@ -35,6 +22,20 @@ devices = {
 '1B.7A.50' : 'unused_se',
 }
 
+
+@shared_task
+def test(param):
+    return 'The test task executed with argument "%s" ' % param
+
+@shared_task
+def send_insteon_cmd(*arg, **kwargs):
+	r           = redis.Redis()
+	address     = arg[0]
+	cmd         = arg[1]
+	val         = arg[2]
+	insteon_msg = serialize([address, cmd, val])
+	r.publish(insteon_cmd_chan,insteon_msg)
+	return 'send_insteon_cmd: ' + str(insteon_msg)
 
 
 @shared_task
@@ -49,6 +50,7 @@ def good_morning(*arg, **kwargs):
 	for msg in msgs:
 		insteon_msg = serialize(msg)
 		r.publish(insteon_cmd_chan,insteon_msg)
+	return 'good_morning: ' + str(insteon_msg)
 
 @shared_task
 def main_floor_on(*arg, **kwargs):
@@ -61,6 +63,7 @@ def main_floor_on(*arg, **kwargs):
 	for msg in msgs:
 		insteon_msg = serialize(msg)
 		r.publish(insteon_cmd_chan,insteon_msg)
+	return 'main_floor_on: ' + str(insteon_msg)
 
 @shared_task
 def school_time(*arg, **kwargs):
@@ -73,7 +76,7 @@ def school_time(*arg, **kwargs):
 	for msg in msgs:
 		insteon_msg = serialize(msg)
 		r.publish(insteon_cmd_chan,insteon_msg)
-
+	return 'school_time: ' + str(insteon_msg)
 
 @shared_task
 def get_status(*arg, **kwargs):
@@ -82,10 +85,12 @@ def get_status(*arg, **kwargs):
 	insteon_msg = serialize(msg)
 	#r.publish(insteon_cmd_chan,insteon_msg)
 	r.publish(insteon_cmd_chan, '{\"cmd\": \"GetStatusOfAllDevices\"}')
+	return 'get_status: '
 
 @shared_task
 def run_cmd(*arg, **kwargs):
 	r           = redis.Redis()
 	msg  = {"cmd" : kwargs.get("cmd",'GetLightLevel'), "addr" : kwargs.get("addr",'20.1f.11'), "val" : kwargs.get("val",0)}
 	r.publish(insteon_cmd_chan, insteon_msg)
+	return 'run_cmd: ' + str(msg)
 

@@ -7,6 +7,7 @@ import requests
 from django.utils.log import getLogger
 
 logger = getLogger("app")
+logger.level = 20
 
 from math import sin, pi
 from sensordata import models

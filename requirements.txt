@@ -13,10 +13,11 @@ djangorestframework==2.4.3
 flower==0.7.2
 ipython==2.2.0
 kombu==3.0.23
-psycopg2==2.5.4
 pytz==2014.7
 redis==2.10.3
 requests==2.4.1
 simplejson==3.6.3
 tornado==4.0.2
 wsgiref==0.1.2
+
+#psycopg2==2.5.4
