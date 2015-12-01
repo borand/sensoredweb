@@ -79,11 +79,32 @@ def school_time(*arg, **kwargs):
 	return 'school_time: ' + str(insteon_msg)
 
 @shared_task
+def christmass_lights_on(*arg, **kwargs):
+	r           = redis.Redis()
+	msgs = [
+		['14.a1.28', 17, 255],
+	]
+	for msg in msgs:
+		insteon_msg = serialize(msg)
+		r.publish(insteon_cmd_chan,insteon_msg)
+	return 'school_time: ' + str(insteon_msg)
+
+@shared_task
+def christmass_lights_off(*arg, **kwargs):
+	r           = redis.Redis()
+	msgs = [
+		['14.a1.28', 19, 0],
+	]
+	for msg in msgs:
+		insteon_msg = serialize(msg)
+		r.publish(insteon_cmd_chan,insteon_msg)
+	return 'school_time: ' + str(insteon_msg)
+
+@shared_task
 def get_status(*arg, **kwargs):
 	r           = redis.Redis()
 	msg = {"cmd" : "GetStatusOfAllDevices"}
 	insteon_msg = serialize(msg)
-	#r.publish(insteon_cmd_chan,insteon_msg)
 	r.publish(insteon_cmd_chan, '{\"cmd\": \"GetStatusOfAllDevices\"}')
 	return 'get_status: '
 
@@ -94,4 +115,9 @@ def run_cmd(*arg, **kwargs):
 	insteon_msg = serialize(msg)
 	r.publish(insteon_cmd_chan, insteon_msg)
 	return 'run_cmd: ' + str(msg)
+
+@shared_task
+def publish(*arg, **kwargs):
+	r = redis.Redis()
+	p.publish(arg[0], arg[1])
 
