@@ -119,5 +119,5 @@ def run_cmd(*arg, **kwargs):
 @shared_task
 def publish(*arg, **kwargs):
 	r = redis.Redis()
-	p.publish(arg[0], arg[1])
+	r.publish(arg[0], arg[1])
 
